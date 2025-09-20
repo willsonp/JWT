@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div th:replace="~{layout :: menuprincipal}"></div>
+
+    <div class="container mt-2 col-md-5 offset-md-4 border border-3 border-dark p-6 rounded-3 shadow">
+
+        <h2 class="mb-3 text-dark text-center">Editar Producto => [[${id}]]</h2>
+
+        <div class="container-fluid">
+
+            <form th:action="@{/products/update_product/}+${{id}}" method="post" th:object="${product}"
+                enctype="multipart/form-data">
+
+                <!-- <input type="hidden" readonly th:field="*{{id}}" name="id" id="id" /> -->
+
+                <div class="col-md-12 mb-2">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" th:field="*{nombre}" class="form-control" id="nombre" name="nombre"
+                        value="${product.nombre}">
+                    <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></p>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea th:field="*{descripcion}" class="form-control" id="descripcion" name="descripcion"
+                        rows="3" th:value="${product.descripcion}"></textarea>
+                    <p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="text-danger"></p>
+                </div>
+                <div class="row g-4 mb-2 ">
+
+                    <div class="mb-2 col-md-6">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" th:field="*{precio}" class="form-control" id="precio" name="precio"
+                            step="0.01" min="0" th:value="${product.precio}">
+                            <p th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}" class="text-danger"></p>
+
+                    </div>
+                    <div class="mb-2 col-md-6">
+                        <label for="costo" class="form-label">Costo</label>
+                        <input type="number" th:field="*{costo}" class="form-control" id="costo" name="costo" step="0.01"
+                            min="0" th:value="${product.costo}">
+                        <p th:if="${#fields.hasErrors('costo')}" th:errors="*{costo}" class="text-danger"></p>
+                    </div>
+                    
+                </div>
+                <div class="row g-4 mb-2 ">
+
+                    <div class="mb-2 col-md-6">
+                        <label for="stock" class="form-label">Stock</label>
+                        <input type="number" th:field="*{stock}" class="form-control" id="stock" name="stock" min="0"
+                            th:value="${product.stock}">
+                        <p th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" class="text-danger"></p>
+                    </div>
+
+                    <div class="mb-2 col-md-6">
+
+                        <label for="categoria_id" class="form-label">Categoría</label>
+                        <select th:field="*{categoria_id}" class="form-select" id="categoria_id" name="categoria_id">
+                            <option th:each="category : ${categories}" th:value="${category.id}"
+                                th:text="${category.descripcion}"></option>
+                        </select>
+
+                    </div>
+                    <!-- </div> -->
+                    <div class="mb-2 col-md-12">
+                        <label for="image_url" class="form-label">URL de la Imagen</label>
+                        <input type="text" th:field="*{image_url}" class="form-control" id="image_url" name="image_url"
+                            th:value="${product.image_url}">
+                    </div>
+
+                    <div class="mb-2 d-flex justify-content-between">
+
+                        <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+                        <a href="/products" class="btn btn-warning">Cancelar</a>
+
+                    </div>
+
+            </form>
+
+        </div>
+        <!-- </div> -->
+
+    </div>
+    <!-- div principal -->
+    <div th:replace="~{layout :: footer}"></div>
+</body>
+
+</html>

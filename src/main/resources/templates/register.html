@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+
+    <div th:replace="~{layout :: menuprincipal}"></div>
+
+    <div class="container mt-4 col-md-5 offset-md-4 border border-3 border-dark p-4 rounded-3 shadow">
+        <h2 class="mb-4 text-dark text-center">Register for New Login</h2>
+        <form action="/api/v1/auth/register" method="post" contentType="application/json">
+            <div class="mb-3">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+           
+            <div class="mb-3 d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Register</button>
+                <a href="/home" class="btn btn-warning">Cancel</a>
+            </div>
+            <hr>
+            <p>Already have an account? <a href="/login">Login here</a>.</p>
+
+        </form>
+
+    </div>
+
+   <div th:replace="~{layout :: footer}"></div>
+</body>
+</html>

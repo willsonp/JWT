@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div th:replace="~{layout :: menuprincipal}"></div>
+
+    <div class="container mt-2 col-md-8 offset-md-2 border border-3 border-dark p-4 rounded-3 shadow">
+        <h3 class="mb-2 text-dark text-center">Lista de Productos</h3>
+        <nav class="navbar bg-body-tertiary border-bottom border-3 border-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand text-dark" href="/">SGA</a>
+
+                <a class="btn btn-primary" href="/products/create_product">Nuevo Producto</a>
+
+                <!-- <a class="btn btn-outline-info btn-sm" href="#">Export to PDF</a>
+
+                <a class="btn btn-outline-success btn-sm" href="#">Export to Excel</a> -->
+
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar" />
+                    <button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>
+                </form>
+            </div>
+        </nav>
+
+        <br>
+
+        <table class="table table-sm table-bordered table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nnombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.nombre}"></td>
+                    <td th:text="${product.descripcion}"></td>
+                    <td th:text="${product.precio}"></td>
+                    <td>
+                        <div class="d-flex justify-content-between">
+
+                            <a th:href="@{/products/edit_product/} + ${product.id}"
+                                class="btn btn-warning btn-sm">Editar</a>
+                            <!-- <a th:href="@{/products/delete(id=${product.id})}"
+                                class="btn btn-danger btn-sm">Eliminar</a> -->                          
+
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Paginación -->
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <span>Total de Productos: <span th:text="${productsPage.totalElements}"></span></span>
+            </div>
+
+            <!--  boton primera pagina -->
+            <div>
+                <a th:if="${productsPage.hasPrevious()}" th:href="@{/products(pagina=0)}"
+                    class="btn btn-sm btn-outline-primary">Primera</a>
+            </div>
+            <!-- boton ultima pagina -->
+            <div>
+                <a th:if="${productsPage.hasNext()}" th:href="@{/products(pagina=${productsPage.totalPages - 1})}"
+                    class="btn btn-sm btn-outline-primary">Última</a>
+            </div>
+
+            <div>
+                <a th:if="${productsPage.hasPrevious()}" th:href="@{/products(pagina=${productsPage.number - 1})}"
+                    class="btn btn-sm btn-outline-primary">Anterior</a>
+            </div>
+            <div>
+                <span>Página <span th:text="${productsPage.number + 1}"></span> de <span
+                        th:text="${productsPage.totalPages}"></span></span>
+            </div>
+            <div>
+                <a th:if="${productsPage.hasNext()}" th:href="@{/products(pagina=${productsPage.number + 1})}"
+                    class="btn btn-sm btn-outline-primary">Siguiente</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="~{layout :: footer}"></div>
+
+</body>
+
+</html>
